@@ -1,0 +1,26 @@
+{% extends "trainingApp/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="results">
+    <div class="container">
+
+    <h1>{{ question.question_text }}</h1>
+
+    <ul>
+    {% for choice in question.choice_set.all %}
+        {% if choice.option_Stars <= 5 %}
+        <li>{{ choice.choice_text }} -- {{ choice.option_Stars }} star{{ choice.option_Stars|pluralize }}</li>
+        {% else %}
+        <h4>Warning!</h4>
+        <p>You have reached the maximum of stars allowed <br>
+           Your selection already has 5 star{{ choice.option_Stars|pluralize }}!</p>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'trainingApp:detail' question.id %}">Go back to add more stars?</a>
+    </div>
+    
+</div>
+{% endblock %}

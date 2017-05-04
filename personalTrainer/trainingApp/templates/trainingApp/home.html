@@ -1,0 +1,13 @@
+{% extends "trainingApp/base.html" %}
+<!-- {% load i18n static %} -->
+{% load static %}
+{% block home-page %}
+<center>
+<div class="links">
+		<h4 id="contact-trainer"><a href="{% url 'trainingApp:emailForm' %}"><button type="button" name="administration">Contact the trainer</button></a></h4>
+</div>
+<div class="branding">
+<h4 id="site-name"><a href="{% url 'admin:index' %}"><button type="button" name="administration">Go to administration site</button></a></h1>
+</div>
+</center>
+{% endblock %}

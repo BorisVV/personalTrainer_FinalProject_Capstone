@@ -1,0 +1,21 @@
+{% extends 'trainingApp/base.html' %}
+{% load static %}
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" /> -->
+
+{% block content %}
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+		<li><a href="{% url 'trainingApp:detail' question.id %}">{{ question.question_text }}</a></li>
+        <!-- <li><a href="/trainingApp/{{ question.id }}/">{{ question.question_text }}</a></li> -->
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No chats are available.</p>
+{% endif %}
+
+<img src="{% static "trainingApp/images/images.gif" %}" alt="Nice!">
+<!-- <img src="{% static "images/tiger.gif" %}" alt="Nice!"> -->
+
+{% endblock %}
