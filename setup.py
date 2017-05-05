@@ -11,7 +11,6 @@ setup(
         "requests",
         "psycopg2",
         "django",
-        "beautifulsoup4",
         "Jinja2",
         "pandas",
         ],
