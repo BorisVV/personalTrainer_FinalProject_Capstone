@@ -12,7 +12,7 @@ setup(
         "psycopg2",
         "django",
         "Jinja2",
-        "pandas",
+        # "pandas",
         ],
 
     author='Boris V',

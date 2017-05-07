@@ -2,10 +2,30 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
-from .models import Question, Client, WeightIn
+from .models import Question, Client, WeightIn, Choice
+
 
 def home(request):
     return render(request, 'trainingApp/home.html')
+
+class ClientsListView(generic.ListView):
+    template_name = 'trainingApp/clients.html'
+    context_object_name = 'list_of_clients'
+
+    def get_queryset(self):
+        """Return all the objects in the clients table."""
+        return Client.objects.order_by('first_name')
+
+class ClientsDetailView(generic.DetailView):
+    model = Client
+    template_name = 'trainingApp/clientDetails.html'
+
+# def weights(request, client_id):
+#     client_name = get_object_or_404(Client, pk=client_id)
+    # return render(request, 'trainingApp/clientsDetail.html', {'client_name': client_name})
+    # return HttpResponseRedirect(reverse('trainingApp:clientsDetail.html', args=(client_name.id,)))
+    # display_weights = pk=request.POST['weight_today', 'date_weighted'])
+
 
 class IndexView(generic.ListView):
     template_name = 'trainingApp/index.html'
@@ -19,6 +39,7 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'trainingApp/detail.html'
+
 
 
 class ResultsView(generic.DetailView):
