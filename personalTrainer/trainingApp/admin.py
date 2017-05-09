@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Client, WeightIn, Question, Choice
-
+from .models import Client, WeightIn
 
 class WeightInTabular(admin.StackedInline):
     model = WeightIn
@@ -20,18 +19,3 @@ class ClientAdmin(admin.ModelAdmin):
 
 # It is important that this line comes after the 2 class above this code.
 admin.site.register(Client, ClientAdmin)
-
-
-class ChoiceInline(admin.TabularInline):
-    model = Choice
-    extra = 1
-# admin.site.register(Choice) #, ChoiceInline)
-
-class QuestionAdmin(admin.ModelAdmin):
-    fields = ['question_text']
-    list_display = ('question_text', 'pub_date', 'was_published_recently')
-    list_filter = ['pub_date']
-    # inlines = [ChoiceInline]# It is important that this line comes after the class.
-
-# It is important that this line comes after the class.
-admin.site.register(Question, QuestionAdmin)

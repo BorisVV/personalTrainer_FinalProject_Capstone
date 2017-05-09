@@ -1,13 +1,18 @@
 {% extends 'trainingApp/base.html' %}
 {% load static %}
+{% block title %}
+    Home page
+{% endblock title %}
+{% block content %}
 
-{% block home-page %}
-<center>
-<div class="links">
-		<h4 id="contact-trainer"><a href="{% url 'trainingApp:emailForm' %}"><button type="button" name="administration">Contact the trainer</button></a></h4>
-</div>
-<div class="branding">
-<h4 id="site-name"><a href="{% url 'admin:index' %}"><button type="button" name="administration">Go to administration site</button></a></h1>
-</div>
-</center>
+    <h1>Welcome to the personal trainer app</h1>
+
+    <!-- There is a button in the base.html that is used to return to this page
+    and this jQuery removes it from the home page. -->
+	<script>
+	$(document).ready(function(){
+	    $("button").hide();
+	});
+	</script>
+
 {% endblock %}

@@ -1,12 +1,27 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.views import generic
-from .models import Question, Client, WeightIn, Choice
 
+from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from personalTrainer import settings
+
+from .models import Client, WeightIn
 
 def home(request):
     return render(request, 'trainingApp/home.html')
+
+def user_profile(request, user_pk):
+
+    user = User.objects.get(pk=user_pk)
+    weights = WeightIn.objects.filter(
+        user=user.pk).order_by('date_weighted').reverse()
+
+    return render(request, 'trainingApp/clientDetails.html',
+                  {'user': user, 'history': weights})
+
 
 class ClientsListView(generic.ListView):
     template_name = 'trainingApp/clients.html'
@@ -20,51 +35,34 @@ class ClientsDetailView(generic.DetailView):
     model = Client
     template_name = 'trainingApp/clientDetails.html'
 
-# def weights(request, client_id):
-#     client_name = get_object_or_404(Client, pk=client_id)
-    # return render(request, 'trainingApp/clientsDetail.html', {'client_name': client_name})
-    # return HttpResponseRedirect(reverse('trainingApp:clientsDetail.html', args=(client_name.id,)))
-    # display_weights = pk=request.POST['weight_today', 'date_weighted'])
 
-
-class IndexView(generic.ListView):
-    template_name = 'trainingApp/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
-
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'trainingApp/detail.html'
-
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'trainingApp/results.html'
-
-
-def stars(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question form.
-        return render(request, 'trainingApp/detail.html', {
-            'question': question,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.option_Stars += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('trainingApp:results', args=(question.id,)))
-
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'trainingApp/results.html', {'question': question})
+# def signup(request):
+#     if request.method == 'POST':
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             username = form.cleaned_data.get('username')
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(username=username, password=raw_password)
+#             login(request, user)
+#             return redirect('trainingApp/home')
+#         else:
+#             form = SignUpForm()
+#             return render(request, 'trainingApp/signup.html', {'form': form})
+#
+# def login(request):
+#     next = request.GET.get('next', '/home/')
+#     if request.method == "POST":
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(username=username, password=password)
+#
+#     if user is not None:
+#         if user.is_active:
+#             login(request, user)
+#             return HttpResponseRedirect(next)
+#         else:
+#             return HttpResponse("Account is not active at the moment.")
+#         else:
+#             return HttpResponseRedirect(settings.LOGIN_URL)
+#             return render(request, "trainingApp/login.html", {'next': next})
