@@ -8,19 +8,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from personalTrainer import settings
 
-from .models import Client, WeightIn
+from django.shortcuts import render_to_response
+
+from .models import Client, WeightIn, WorkOutSchedule
+
+from chartit import DataPool, Chart
 
 def home(request):
     return render(request, 'trainingApp/home.html')
-
-def user_profile(request, user_pk):
-
-    user = User.objects.get(pk=user_pk)
-    weights = WeightIn.objects.filter(
-        user=user.pk).order_by('date_weighted').reverse()
-
-    return render(request, 'trainingApp/clientDetails.html',
-                  {'user': user, 'history': weights})
 
 
 class ClientsListView(generic.ListView):
@@ -33,8 +28,40 @@ class ClientsListView(generic.ListView):
 
 class ClientsDetailView(generic.DetailView):
     model = Client
-    template_name = 'trainingApp/clientDetails.html'
+    template_name = 'trainingApp/clientWeightIns.html'
 
+class ClientsWorkOutSchdDetail(generic.DeleteView):
+    model = WorkOutSchedule
+    template_name = 'trainingApp/clientWorkOutSchd.html'
+
+# def line(request, name_of_client):
+#     ds = DataPool(
+#        series=
+#         [{'options': {
+#             'source': Client.objects.get(pk=name_of_client)},
+#           'terms': [
+#             'date_weighted',
+#             'weight_today']}
+#          ])
+#
+#     cht = Chart(
+#             datasource = ds,
+#             series_options =
+#               [{'options':{
+#                   'type': 'line',
+#                   'stacking': False},
+#                 'terms':{
+#                   'date_weighted': [
+#                     'weight_today']}
+#                 }],
+#             chart_options =
+#               {'title': {
+#                    'text': 'The chart for the client'},
+#                'xAxis': {
+#                     'title': {
+#                        'text': 'date_weighted'}}})
+#
+#     return render_to_response('trainingApp/clientWeightIns.html', {'weightChart':cht})
 
 # def signup(request):
 #     if request.method == 'POST':

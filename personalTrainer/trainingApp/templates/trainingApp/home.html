@@ -6,6 +6,18 @@
 {% block content %}
 
     <h1>Welcome to the personal trainer app</h1>
+     <div id="document-floating">
+        <div id="document-navigation" style="overflow-y: auto; max-height: 15em; overflow-x: hidden;">
+              <h4>Not Logged In</h4>
+              <ul>
+                <li><a href="login_form">Login</a></li>
+                <li><a href="register_form">Register</a></li>
+                <li><a href="forgotten_password_form">Lost Login?</a></li>
+             </ul>
+            <div id="statusdiv">
+            </div>
+        </div>
+    </div>
 
     <!-- There is a button in the base.html that is used to return to this page
     and this jQuery removes it from the home page. -->

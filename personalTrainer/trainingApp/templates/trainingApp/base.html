@@ -14,16 +14,23 @@
 		{% block title %}
 		{% endblock title %}
 	</title>
+	<style media="screen">
+	#document-floating {
+		min-height:500px;
+		_height:500px;
+		font-size:200%;
+	}
+	</style>
+
 
 </head>
 <body>
 	<div class="container-fluid">
+		{% block content %}
 
-		{% block content %}{% endblock content%}
-
+		{% endblock content%}
 		<button type="button" name="home">
-			<a href="{% url 'trainingApp:home' %}" >Home</a>
-		</button>
+			<a href="{% url 'trainingApp:home' %}" >Home</a></button>
 
 	</div>
 </body>

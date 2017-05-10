@@ -9,11 +9,14 @@ class Client(models.Model):
     email = models.EmailField(max_length=100, unique= True)
     initial_weight = models.FloatField(default=0)
 
+    class Meta:
+        ordering = ["-first_name"]
+
     def get_absolute_url(self):
         return reverse("clients", kwargs={"first_name": self.id})
 
     def __str__(self):
-        return '%s %s' %(self.first_name, self.last_name)
+        return('{} {}' .format(self.first_name, self.last_name))
 
     def was_client_added_recently(self):
         now = timezone.now()
@@ -24,19 +27,39 @@ class Client(models.Model):
 
 class WeightIn(models.Model):
     '''Represent one appointment with one client with the trainer.'''
-    client_pk = models.ForeignKey(Client, on_delete=models.PROTECT)
-    date_weighted = models.DateTimeField()
-    weight_today = models.FloatField()
+    name_of_client = models.ForeignKey(Client, on_delete=models.PROTECT)
+    date_weighted = models.DateTimeField(blank=True)
+    weight = models.FloatField(blank=True)
+
+    class Meta:
+        ordering = ['-weight']
 
     def __str__(self):
-        '''Returns the first name of the client.'''
-        return '%s %s' %(self.weight_today, self.date_weighted)
+        '''Returns the information of the client's weight and data taken.'''
+        return('{} {}' .format(self.weight, self.date_weighted))
 
-    def was_weightIn_taken_recently(self):
-        ''' This function is to check and see if the weight
-            was taken recently or not.'''
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.date_weighted <= now
-        was_weightIn_taken_recently.admin_order_field = 'date_weighted'
-        was_weightIn_taken_recently.boolean = True
-        was_weightIn_taken_recently.short_description = 'Added recently?'
+    # def display_client(self):
+    #     return ', '.join([client.first_name for client in self.client.all()])
+    # display_client.short_description = 'Client'
+
+class WorkOutSchedule(models.Model):
+    ''' Represent schedules for the client that will workout.'''
+    name_of_client = models.ForeignKey(Client, on_delete=models.PROTECT)
+    date_WO = models.DateField(blank=True)
+    time_of_day = models.TimeField(blank=True)
+    WEEK_SCHEDULE = (
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+    )
+    schedule = models.CharField(max_length=30, choices=WEEK_SCHEDULE, default='Monday', help_text='Day of week availability')
+
+    class Meta:
+        ordering = ['-date_WO']
+
+    def __str__(self):
+        return('{} {} {}' .format(self.date_WO, self.schedule, self.time_of_day))
