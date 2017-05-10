@@ -30,6 +30,7 @@ class WeightIn(models.Model):
     name_of_client = models.ForeignKey(Client, on_delete=models.PROTECT)
     date_weighted = models.DateTimeField(blank=True)
     weight = models.FloatField(blank=True)
+    # TODO Float Validation, check that is a float not chars.
 
     class Meta:
         ordering = ['-weight']
@@ -38,6 +39,7 @@ class WeightIn(models.Model):
         '''Returns the information of the client's weight and data taken.'''
         return('{} {}' .format(self.weight, self.date_weighted))
 
+        # This was incase the client wasn't being displayed correctly.
     # def display_client(self):
     #     return ', '.join([client.first_name for client in self.client.all()])
     # display_client.short_description = 'Client'
@@ -47,6 +49,9 @@ class WorkOutSchedule(models.Model):
     name_of_client = models.ForeignKey(Client, on_delete=models.PROTECT)
     date_WO = models.DateField(blank=True)
     time_of_day = models.TimeField(blank=True)
+    # TODO Validation if user already has a scheduled date and time.
+    # TODO Past date/tie validation error, make sure user enters future dates.
+    
     WEEK_SCHEDULE = (
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),

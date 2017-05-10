@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^home/', include('trainingApp.urls')),
     url(r'^$', RedirectView.as_view(url='/home/', permanent=True)),
 
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     # url(r'^accounts/login/$', auth_views.login, name='login'),
     # url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     # url(r'^signup/$', views.signup, name='signup'),
