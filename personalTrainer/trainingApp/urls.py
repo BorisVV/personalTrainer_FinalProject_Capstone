@@ -14,11 +14,11 @@ app_name = 'trainingApp'
 urlpatterns = [
 
     url(r'^$', views.home, name='home'),
-
     url(r'^clients/$', views.ClientsListView.as_view(), name='clients'),
+    url(r'^allSchedules/$', views.ClientsWorkOutSchdListView.as_view(), name='allSchedules'),
     url(r'^(?P<pk>[0-9]+)/clientWeightIns/$', views.ClientsDetailView.as_view(), name=
     'clientWeightIns'),
-    url(r'^(?P<pk>[0-9]+)/clientWorkOutSchd/$', views.ClientsWorkOutSchdDetail.as_view(), name=
+    url(r'^(?P<pk>[0-9]+)/clientWorkOutSchd/$', views.ClientWorkOutSchdDetail.as_view(), name=
     'clientWorkOutSchd'),
 
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

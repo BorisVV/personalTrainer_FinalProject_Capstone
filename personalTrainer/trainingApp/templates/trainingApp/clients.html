@@ -9,7 +9,6 @@
     	 	{{ client.first_name }}  {{ client.last_name }}  {{ client.email }}
 			{{ client.date_joined }}  {{ client.initial_weight }}
 			<a href="{% url 'trainingApp:clientWeightIns' client.id %}"><u>Weight records</u></a>
-            
             <a href="{% url 'trainingApp:clientWorkOutSchd' client.id %}"><u>WorkOut Schedule</u></a>
         </li>
         </h3>

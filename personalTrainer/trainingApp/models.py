@@ -62,4 +62,4 @@ class WorkOutSchedule(models.Model):
         ordering = ['-date_WO']
 
     def __str__(self):
-        return('{} {} {}' .format(self.date_WO, self.schedule, self.time_of_day))
+        return('{} {} {} {}' .format(self.date_WO, self.schedule, self.time_of_day, self.name_of_client.id))

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link href="{% static 'trainingApp/css/bootstrap.min.css' %}" rel="stylesheet" type = "text/css"/>
 	<link href="{% static 'trainingApp/js/bootstrap.min.js' %}">
+	<link rel="stylesheet" href="{% static 'traningApp/css/styles.css' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 	<title>
@@ -20,18 +21,35 @@
 		_height:500px;
 		font-size:200%;
 	}
+	.sidebar-nav {
+	    margin-top: 20px;
+	    padding: 0;
+	    list-style: none;
+	}
 	</style>
 
 
 </head>
 <body>
 	<div class="container-fluid">
-		{% block content %}
+	    <div class="row">
+	      <div class="col-sm-2">
+	      {% block sidebar %}
+		  <ul class="sidebar-nav">
+			  <strong>
+	          <li  type="home-link"><a href="{% url 'trainingApp:home' %}">Home</a></li>
+	          <li><a href="{% url 'trainingApp:clients' %}">All Client</a></li>
+	          <li><a href="{% url 'trainingApp:allSchedules' %}">All WorkOut Schedules</a></li>
+			  </strong>
+      	  </ul>
+	     {% endblock %}
+	      </div>
+	      <div class="col-sm-10 ">
+	      {% block content %}
 
-		{% endblock content%}
-		<button type="button" name="home">
-			<a href="{% url 'trainingApp:home' %}" >Home</a></button>
-
-	</div>
+		  {% endblock %}
+	      </div>
+	    </div>
+	 </div>
 </body>
 </html>

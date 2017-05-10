@@ -1,0 +1,18 @@
+{% extends 'trainingApp/base.html' %}
+{% load static %}
+{% block content %}
+    {% if list_of_WOSchedules %}
+        <ul>
+        {% for dates in list_of_WOSchedules %}
+        <h3>
+		<li>
+    	 	{{ dates.date_WO }}  {{ dates.time_of_day }}  {{ dates.schedule }}
+			<a href="{% url 'trainingApp:clientWorkOutSchd' dates.name_of_client.id %}"><u>{{ dates.name_of_client.first_name }} {{ dates.name_of_client.last_name }}</u></a> 
+        </li>
+        </h3>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No schedules in the list.</p>
+    {% endif %}
+{% endblock %}

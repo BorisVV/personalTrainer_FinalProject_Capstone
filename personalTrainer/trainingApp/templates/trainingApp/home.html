@@ -17,13 +17,18 @@
             <div id="statusdiv">
             </div>
         </div>
+          <p>There are currently:</p>
+          <ul>
+            <li><strong>Clients:</strong> {{ num_of_clients }}</li>
+            <li><strong>Work Out Schedules:</strong> {{ num_of_workouts }}</li>
+          </ul>
     </div>
 
     <!-- There is a button in the base.html that is used to return to this page
     and this jQuery removes it from the home page. -->
 	<script>
 	$(document).ready(function(){
-	    $("button").hide();
+	    $("home-link").hide();
 	});
 	</script>
 
