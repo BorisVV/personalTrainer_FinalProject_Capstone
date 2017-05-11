@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 class Client(models.Model):
     first_name = models.CharField(max_length=30)
@@ -8,6 +10,7 @@ class Client(models.Model):
     date_joined = models.DateTimeField(auto_now=True, blank=False, editable=False)
     email = models.EmailField(max_length=100, unique= True)
     initial_weight = models.FloatField(default=0)
+    # urer = models.ForeignKey(User, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ["-first_name"]
@@ -51,7 +54,7 @@ class WorkOutSchedule(models.Model):
     time_of_day = models.TimeField(blank=True)
     # TODO Validation if user already has a scheduled date and time.
     # TODO Past date/tie validation error, make sure user enters future dates.
-    
+
     WEEK_SCHEDULE = (
         ('Monday', 'Monday'),
         ('Tuesday', 'Tuesday'),

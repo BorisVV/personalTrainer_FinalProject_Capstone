@@ -3,16 +3,30 @@
 
 {% block content %}
 	<!-- <h2>{{ dates.time_of_day }}</h2> -->
-	<h2>{{ client.first_name }}  {{ client.last_name }}</h2>
-
-	{% for detail in client.workoutschedule_set.all %}
+	<!-- <h2>{{ client.first_name }}  {{ client.last_name }}</h2> -->
+	<!-- <li><strong>Clients:</strong> {{ num_of_clients }}</li> #optional -->
+	<table class="table">
+		<p>This are the training schedules for:</p>
+		<h2><strong>{{ client.first_name }}  {{ client.last_name}}</strong></h2>
+		<li><strong>Total Work Out Schedules:</strong> {{ num_of_workouts }}</li>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Day</th>
+				<th>Time</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for detail in client.workoutschedule_set.all %}
 		<!-- <input type="radio" name="detail" id="detail{{ forloop.counter }}" value="{{ detail.id }}" /> -->
-     	<h3>
-		<tr for="detail{{ forloop.counter }}">
-		Schedule for : {{ detail.schedule }}  {{ detail.date_WO }} at
-		{{ detail.time_of_day }}
-
-		</tr><br/>
-	 	</h3>
-	{% endfor %}
+			<!-- <tr for="detail{{ forloop.counter }}"> -->
+			<tr>
+				<td>Scheduled for</td>
+				<td>{{ detail.schedule }}</td>
+				<td>{{ detail.time_of_day }}</td>
+				<td>{{ detail.date_WO }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
 {% endblock %}

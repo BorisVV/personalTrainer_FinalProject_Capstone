@@ -3,16 +3,27 @@
 
 {% block content %}
 <!-- {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %} -->
-	<h2>{{ client.first_name }}</h2>
-	{% for detail in client.weightin_set.all %}
-		<!-- <input type="radio" name="detail" id="detail{{ forloop.counter }}" value="{{ detail.id }}" /> -->
-     	<h3>
-		<tr for="detail{{ forloop.counter }}">
-		{{ detail.date_weighted }}
-		{{ detail.weight }}
-		</tr><br/>
-	 	</h3>
-	{% endfor %}
+	<table class="table">
+		<p>Here are the weight records for</p>
+		<h2><strong>{{ client.first_name }}  {{ client.last_name}}</strong></h2>
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Weight</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for detail in client.weightin_set.all %}
+			<!-- <input type="radio" name="detail" id="detail{{ forloop.counter }}" value="{{ detail.id }}" /> -->
+			<!-- <tr for="detail{{ forloop.counter }}"> -->
+			<tr>
+				<td>{{ detail.date_weighted }}</td>
+				<td>{{ detail.weight }}</td>
+			</tr><br/>
+		</tbody>
+
+		{% endfor %}
+	</table>
 {% endblock %}
 
 

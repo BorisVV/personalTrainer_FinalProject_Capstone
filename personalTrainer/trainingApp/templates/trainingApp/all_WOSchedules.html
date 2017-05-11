@@ -2,16 +2,26 @@
 {% load static %}
 {% block content %}
     {% if list_of_WOSchedules %}
-        <ul>
+        <table class="table">
+        <h2>This is this list of all the work schedules with the client's name</h2>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Day</th>
+            <th>Fullname</th>
+          </tr>
+        </thead>
+        <tbody>
         {% for dates in list_of_WOSchedules %}
-        <h3>
-		<li>
-    	 	{{ dates.date_WO }}  {{ dates.time_of_day }}  {{ dates.schedule }}
-			<a href="{% url 'trainingApp:clientWorkOutSchd' dates.name_of_client.id %}"><u>{{ dates.name_of_client.first_name }} {{ dates.name_of_client.last_name }}</u></a> 
-        </li>
-        </h3>
+        <tr>
+    	 	<td>{{ dates.date_WO }}</td>
+            <td><strong>{{ dates.time_of_day }}</strong></td>
+            <td>{{ dates.schedule }}</td>
+			<td>{{ dates.name_of_client.first_name }} {{ dates.name_of_client.last_name }}</td>
+        </tr>
         {% endfor %}
-        </ul>
+        </tbody>
     {% else %}
         <p>No schedules in the list.</p>
     {% endif %}

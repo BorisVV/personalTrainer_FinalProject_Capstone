@@ -2,18 +2,31 @@
 {% load static %}
 {% block content %}
     {% if list_of_clients %}
-        <ul>
+        <table class="table">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Date Joined</th>
+            <th>Original Weight</th>
+            <th>Link-WeghtRecords</th>
+            <th>Link-WO-schedule</th>
+          </tr>
+        </thead>
+        <tbody>
         {% for client in list_of_clients %}
-        <h3>
-		<li>
-    	 	{{ client.first_name }}  {{ client.last_name }}  {{ client.email }}
-			{{ client.date_joined }}  {{ client.initial_weight }}
-			<a href="{% url 'trainingApp:clientWeightIns' client.id %}"><u>Weight records</u></a>
-            <a href="{% url 'trainingApp:clientWorkOutSchd' client.id %}"><u>WorkOut Schedule</u></a>
-        </li>
-        </h3>
+		 <tr>
+            <td>{{ client.first_name }}</td>
+            <td>{{ client.last_name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.date_joined }}</td>
+            <td>{{ client.initial_weight }}</td>
+		  	<td><a href="{% url 'trainingApp:clientWeightIns' client.id %}"><u>Weight records</u></a></td>
+            <td><a href="{% url 'trainingApp:clientWorkOutSchd' client.id %}"><u>WorkOut Schedule</u></a></td>
+        </tr>
         {% endfor %}
-        </ul>
+        </tbody>
     {% else %}
         <p>No clients in the list.</p>
     {% endif %}

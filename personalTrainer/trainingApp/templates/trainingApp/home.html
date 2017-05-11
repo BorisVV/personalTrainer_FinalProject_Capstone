@@ -1,35 +1,31 @@
 {% extends 'trainingApp/base.html' %}
 {% load static %}
-{% block title %}
-    Home page
-{% endblock title %}
+{% block title %}Home page{% endblock title %}
+
 {% block content %}
+<h1>Welcome to the trainingApp</h1>
+ {% if user.is_authenticated %}
+    {% if user.is_superuser %}
+        <h2>Welcome <strong>super</strong> user</h2>
+        <ul>Number of clients: <strong>{{ num_of_clients }}</strong></ul>
+    {% endif %}
+    {% else %}
+     <li>Welcome <strong>{{ user.get_username }}</strong> click on the link below</li>
+     <h2>{{ client.first_name }}  {{ client.last_name }}</h2>
+     <li><strong>Clients:</strong> {{ num_of_clients }}</li>
+     {% for detail in client.workoutschedule_set.all %}
+     <!-- <input type="radio" name="detail" id="detail{{ forloop.counter }}" value="{{ detail.id }}" /> -->
+     <h3>
+     <li><strong>Work Out Schedules:</strong> {{ num_of_workouts }}</li>
+     <tr for="detail{{ forloop.counter }}">
+     Schedule for : {{ detail.schedule }}  {{ detail.date_WO }} at
+     {{ detail.time_of_day }}
 
-    <h1>Welcome to the personal trainer app</h1>
-     <div id="document-floating">
-        <div id="document-navigation" style="overflow-y: auto; max-height: 15em; overflow-x: hidden;">
-              <h4>Not Logged In</h4>
-              <ul>
-                <li><a href="login_form">Login</a></li>
-                <li><a href="register_form">Register</a></li>
-                <li><a href="forgotten_password_form">Lost Login?</a></li>
-             </ul>
-            <div id="statusdiv">
-            </div>
-        </div>
-          <p>There are currently:</p>
-          <ul>
-            <li><strong>Clients:</strong> {{ num_of_clients }}</li>
-            <li><strong>Work Out Schedules:</strong> {{ num_of_workouts }}</li>
-          </ul>
-    </div>
-
-    <!-- There is a button in the base.html that is used to return to this page
-    and this jQuery removes it from the home page. -->
-	<script>
-	$(document).ready(function(){
-	    $("home-link").hide();
-	});
-	</script>
-
+     </tr><br/>
+     </h3>
+     {% if empty %}
+     <p>{{ user.get_username }}, you don't have any training schedule.</p>
+     {% endif %}
+    {% endfor %}
+ {% endif %}
 {% endblock %}

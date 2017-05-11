@@ -3,23 +3,23 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from django.views import generic
 
-from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth import authenticate, logout, login, REDIRECT_FIELD_NAME
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from personalTrainer import settings
 
-from django.shortcuts import render_to_response
-
+from django.shortcuts import render_to_response, redirect
+from django.utils.decorators import method_decorator
 from .models import Client, WeightIn, WorkOutSchedule
 
-from chartit import DataPool, Chart
 
 def home(request):
     ''' Home page same as Index page'''
     num_of_clients = Client.objects.all().count()
     num_of_workouts = WorkOutSchedule.objects.all().count()
-    return render(request, 'trainingApp/home.html',
-    context={'num_of_clients': num_of_clients, 'num_of_workouts': num_of_workouts})
+    return render(request, 'trainingApp/home.html', context={'num_of_clients': num_of_clients, 'num_of_workouts': num_of_workouts})
+
 
 
 class ClientsListView(generic.ListView):
@@ -47,34 +47,6 @@ class ClientWorkOutSchdDetail(generic.DetailView):
     model = Client
     template_name = 'trainingApp/clientWorkOutSchd.html'
 
-# def line(request, name_of_client):
-#     ds = DataPool(
-#        series=
-#         [{'options': {
-#             'source': Client.objects.get(pk=name_of_client)},
-#           'terms': [
-#             'date_weighted',
-#             'weight_today']}
-#          ])
-#
-#     cht = Chart(
-#             datasource = ds,
-#             series_options =
-#               [{'options':{
-#                   'type': 'line',
-#                   'stacking': False},
-#                 'terms':{
-#                   'date_weighted': [
-#                     'weight_today']}
-#                 }],
-#             chart_options =
-#               {'title': {
-#                    'text': 'The chart for the client'},
-#                'xAxis': {
-#                     'title': {
-#                        'text': 'date_weighted'}}})
-#
-#     return render_to_response('trainingApp/clientWeightIns.html', {'weightChart':cht})
 
 # def signup(request):
 #     if request.method == 'POST':
