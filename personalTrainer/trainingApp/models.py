@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
 class Client(models.Model):
@@ -71,3 +72,8 @@ class WorkOutSchedule(models.Model):
 
     def __str__(self):
         return('{} {} {} {}' .format(self.date_WO, self.schedule, self.time_of_day, self.name_of_client.id))
+
+class UserSignUp(models.Model):
+    username = models.ForeignKey(User, blank=False)
+    raw_password = models.CharField(max_length=30)
+    user = authenticate(username=username, password=raw_password)
